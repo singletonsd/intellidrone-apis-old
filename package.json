@@ -1,0 +1,26 @@
+{
+  "name": "vacas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server/index.js",
+    "fix-memory-limit": "increase-memory-limit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.3",
+    "multer": "^1.3.1",
+    "node-grok": "2.0.3",
+    "ol": "^5.1.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.2",
+    "increase-memory-limit": "^1.0.3",
+    "cross-env": "^5.0.5"
+  }
+}
