@@ -15,7 +15,7 @@ app.use(multer({dest:'./uploads/'}).any());
 
 app.use('/api/vacas',require('./routes/vaca.routes.js'));
 app.use('/api/actividad',require('./routes/actividad.routes.js'));
-
+app.use('/api/users',require('./routes/user.routes.js'));
 app.listen(app.get('port'),()=>{
   console.log("Aplicacion corriendo en puerto:",app.get('port'))
 });

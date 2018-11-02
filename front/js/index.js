@@ -4,7 +4,18 @@ var pruebaJson = [];
 var fechaHastaGlobal;
 var fechaDesdeGlobal;
 var colores =["#FF0000","#00FF00","#0000FF"];
+var userId = sessionStorage.getItem("UserID");
+
+
 $(document).ready(function(){
+
+  if(!sessionStorage.getItem("UserID")){
+    window.location.href="../login.html";
+  }
+  var latitudCampo = sessionStorage.getItem("latitudCampo");
+  var longitudCampo = sessionStorage.getItem("longitudCampo");
+  alert(longitudCampo);
+
   setDates();
   $('.collapse').collapse('show');
   //CARGO EL MAPA EN EL NAVEGADOR BAJO LA VARIABLE MAP
@@ -27,14 +38,14 @@ $(document).ready(function(){
     }),
     ],
     view: new ol.View({
-      center: ol.proj.fromLonLat([-64.194840,-31.436773]),
+      center: ol.proj.fromLonLat([parseFloat(longitudCampo),parseFloat(latitudCampo)]),
       zoom: 18
     })
   });
 
   //LLAMADO ASINCRONA AL SERVIDOR PIDIENDO POR TODAS LAS VACAS
   //httpGetAsync('http://localhost:3000/api/vacas',populateSelect);
-  $.getJSON('http://localhost:3000/api/vacas',function(result){
+  $.getJSON('http://localhost:3000/api/vacas/'+userId,function(result){
     populateSelect(result);
   });
   //httpGetAsync('http://localhost:3000/api/vacas/0FF',respuesta);

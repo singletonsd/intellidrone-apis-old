@@ -48,3 +48,39 @@ tr:nth-child(even) {
 table p {
   display: inline;
 }
+
+.div-login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+}
+#form-login{
+  background-color:  #d6dbdf ;
+  padding:50px;
+  border-radius: 5px;
+}
+
+
+.wrapper-settings{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-around;
+  top:50px;
+
+
+}
+
+.settings-vacas{
+  width: 80%;
+}
+
+.settings-coordinates{
+  width: 80%;
+}
+.settings-password{
+  width: 80%;
+}
