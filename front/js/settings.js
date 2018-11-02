@@ -19,9 +19,9 @@ function populateTable(array){
     let id = array[i]._id;
     let nombre = array[i].nombre;
     let sexo = array[i].sexo;
-    let editar = "<button class='btn btn-md btn-info'>Editar</button>";
+    //let editar = "<button class='btn btn-md btn-info'>Editar</button>";
     let eliminar = "<button onclick='deleteVaca(\""+id+"\")' class='btn btn-md btn-danger'>Eliminar</button>";
-    $("#vacas-owned").append("<tr><td>"+id+"</td><td>"+nombre+"</td><td>"+sexo+"</td><td>"+editar+" "+eliminar+"</td></tr>");
+    $("#vacas-owned").append("<tr><td>"+id+"</td><td>"+nombre+"</td><td>"+sexo+"</td><td>"+eliminar+"</td></tr>");
 
   }
 
