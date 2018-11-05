@@ -1,12 +1,16 @@
 var arregloVacasOwned = [];
 var userId = sessionStorage.getItem("UserID");
+
+//var API_URL = "http://localhost:3000/api";
+var API_URL = "http://web.robotagro.com/api";
+
 $(document).ready(function(){
   getVacasHTTP();
 
 });
 
 function getVacasHTTP(){
-  $.getJSON('http://localhost:3000/api/vacas/'+userId,function(result){
+  $.getJSON(API_URL+'/vacas/'+userId,function(result){
     arregloVacasOwned = result;
     console.log(arregloVacasOwned)
     populateTable(result);
@@ -31,7 +35,7 @@ $("#boton-submit-change-coordinates").click(function(e){
   e.preventDefault();
   var formData = JSON.stringify({"longitud":$("#longitud-campo-input").val(),"latitud":$("#latitud-campo-input").val(),"usuario":userId});
   $.ajax({
-    url:'http://localhost:3000/api/users/setCoordinates',
+    url:API_URL+'/users/setCoordinates',
     dataType:'json',
     data:formData,
     contentType: 'application/json',
@@ -57,7 +61,7 @@ $("#boton-submit-new-vaca-form").click(function(e){
   let nombre = $("#nombre-vaca-input").val();
   var formData = JSON.stringify({"id":idVaca,"sexo":sexo,"nombre":nombre,"userID":userId});
   $.ajax({
-    url:'http://localhost:3000/api/vacas',
+    url:API_URL+'/vacas',
     dataType:'json',
     data:formData,
     contentType: 'application/json',
@@ -76,7 +80,7 @@ $("#boton-submit-new-vaca-form").click(function(e){
 
 function deleteVaca(id){
   $.ajax({
-    url:'http://localhost:3000/api/vacas/delete/'+id,
+    url:API_URL+'/vacas/delete/'+id,
 
     method:'GET',
     success:function(response){

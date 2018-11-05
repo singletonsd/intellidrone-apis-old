@@ -5,7 +5,8 @@ var fechaHastaGlobal;
 var fechaDesdeGlobal;
 var colores =["#FF0000","#00FF00","#0000FF"];
 var userId = sessionStorage.getItem("UserID");
-
+//var API_URL = "http://localhost:3000/api";
+var API_URL = "http://web.robotagro.com/api";
 
 $(document).ready(function(){
 
@@ -14,7 +15,7 @@ $(document).ready(function(){
   }
   var latitudCampo = sessionStorage.getItem("latitudCampo");
   var longitudCampo = sessionStorage.getItem("longitudCampo");
-  alert(longitudCampo);
+  //alert(longitudCampo);
 
   setDates();
   $('.collapse').collapse('show');
@@ -45,7 +46,7 @@ $(document).ready(function(){
 
   //LLAMADO ASINCRONA AL SERVIDOR PIDIENDO POR TODAS LAS VACAS
   //httpGetAsync('http://localhost:3000/api/vacas',populateSelect);
-  $.getJSON('http://localhost:3000/api/vacas/'+userId,function(result){
+  $.getJSON(API_URL+'/vacas/'+userId,function(result){
     populateSelect(result);
   });
   //httpGetAsync('http://localhost:3000/api/vacas/0FF',respuesta);
@@ -107,7 +108,7 @@ function updateDataVacas(estado = "mixto"){
   }
 }
 function getRemoteVaca(vaca,estado){
-  const Url = 'http://localhost:3000/api/vacas/'+vaca+'/'+fechaDesdeGlobal+'/'+fechaHastaGlobal;
+  const Url = API_URL+'/vacas/'+vaca+'/'+fechaDesdeGlobal+'/'+fechaHastaGlobal;
 
   $.getJSON(Url,function(result){
     addVacaToArray(result,estado);

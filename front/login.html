@@ -36,7 +36,7 @@
     var formData = JSON.stringify({"usuario":$("#user").val(), "password":$("#pass").val()});
     console.log(formData);
     $.ajax({
-      url:'http://localhost:3000/api/users/check',
+      url:'http://web.robotagro.com/api/users/check',
       dataType:'json',
       data:formData,
       contentType: 'application/json',
