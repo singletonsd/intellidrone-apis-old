@@ -74,8 +74,13 @@ else
         --name ${CONTAINER_NAME} ${IMAGE_NAME}
 fi
 
-
 CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${CONTAINER_NAME})
+echo "Waiting port to be open ${CONTAINER_IP}:3306..."
+while ! nc -z ${CONTAINER_IP} 3306; do
+    sleep 0.5 # wait for 1/10 of the second before check again
+done
+echo "Container ready"
+
 PORT=$(docker port ${CONTAINER_NAME} | sed 's/^.*://')
 PASSWORD=$(docker inspect -f "{{ .Config.Env }}" ${CONTAINER_NAME} | cut -d ' ' -f2 | cut -d '=' -f2)
 
