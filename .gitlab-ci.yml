@@ -7,8 +7,8 @@ image: node:8-alpine
 .generate_env_file: &generate_env_file
     cp environment/.prod.env .env
 .build_push_gitlab: &build_push
-  - ./scripts/generate_docker_image.sh registry.gitlab.com/intellidrone/api/node ${custom_tag} ${CI_COMMIT_SHA}
-  - docker push registry.gitlab.com/transporte-tlc/api/node:${custom_tag}
+  - ./scripts/generate_docker_image.sh registry.gitlab.com/intellidrone/api ${custom_tag} ${CI_COMMIT_SHA}
+  - docker push registry.gitlab.com/intellidrone/api:${custom_tag}
 
 cache:
   paths:
@@ -33,6 +33,43 @@ test:
   script:
     - echo test
 
+deploy-server:
+  stage: deploy
+  before_script:
+    # Install ssh-agent if not already installed, it is required by Docker.
+    # (change apt-get to yum if you use a CentOS-based image)
+    - 'which ssh-agent || ( apk add --update openssh )'
+
+    # Add bash
+    - apk add --update bash
+
+    # Add git
+    - apk add --update git
+
+    # Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+
+    # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+
+    # For Docker builds disable host key checking. Be aware that by adding that
+    # you are suspectible to man-in-the-middle attacks.
+    # WARNING: Use this only with the Docker executor, if you use it with shell
+    # you will overwrite your user's SSH config.
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # In order to properly check the server's host key, assuming you created the
+    # SSH_SERVER_HOSTKEYS variable previously, uncomment the following two lines
+    # instead.
+    # - mkdir -p ~/.ssh
+    # - '[[ -f /.dockerenv ]] && echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts'
+  script:
+  - npm i -g pm2
+  - pm2 deploy ecosystem.config.js production
+  when: on_success
+  only:
+    - master
+
 deploy-image-develop:
   image: docker:latest
   services:
@@ -46,7 +83,7 @@ deploy-image-develop:
   before_script:
     - *login  # This is a reference to the anchor.
   script:
-    - *build_push # This is a reference to the anchor.
+    *build_push # This is a reference to the anchor.
   when: on_success
   only:
     - develop
@@ -65,7 +102,7 @@ deploy-image-master:
   before_script:
     - *login  # This is a reference to the anchor.
   script:
-    - *build_push # This is a reference to the anchor.
+    *build_push # This is a reference to the anchor.
   when: on_success
   only:
     - master
@@ -83,7 +120,7 @@ deploy-image-tag:
   before_script:
     - *login  # This is a reference to the anchor.
   script:
-    - *build_push # This is a reference to the anchor.
+    *build_push # This is a reference to the anchor.
   when: on_success
   only:
     - tags
