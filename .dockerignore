@@ -1,0 +1,6 @@
+README.md
+.gitlab-ci.yml
+/scripts/
+/node_modules/
+/keys/
+/environment/

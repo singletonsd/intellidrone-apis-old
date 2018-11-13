@@ -1,0 +1,89 @@
+image: node:8-alpine
+# This are NOT jobs and it will be ignored by GitLab-CI
+.login_gitlab_registry: &login  # This is an anchor
+    docker login registry.gitlab.com -u ${GITLAB_REGISTRY_USER} -p ${GITLAB_REGISTRY_PASS}
+.install_dependencies: &install_dependencies
+    apk add --no-cache bash curl gawk sed util-linux pciutils usbutils coreutils binutils findutils grep
+.generate_env_file: &generate_env_file
+    cp environment/.prod.env .env
+.build_push_gitlab: &build_push
+  - ./scripts/generate_docker_image.sh registry.gitlab.com/intellidrone/api/node ${custom_tag} ${CI_COMMIT_SHA}
+  - docker push registry.gitlab.com/transporte-tlc/api/node:${custom_tag}
+
+cache:
+  paths:
+  - node_modules/
+  - .env
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm install
+    - *generate_env_file
+
+test:
+  services:
+    - mongo:4.0
+  stage: test
+  script:
+    - echo test
+
+deploy-image-develop:
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay
+    custom_tag: '${CI_COMMIT_REF_NAME}'
+  stage: deploy
+  dependencies:
+    - build
+  before_script:
+    - *login  # This is a reference to the anchor.
+  script:
+    - *build_push # This is a reference to the anchor.
+  when: on_success
+  only:
+    - develop
+
+deploy-image-master:
+  image: docker:latest
+  services:
+    - docker:dind
+  # Use the OverlayFS driver for improved performance.
+  variables:
+    DOCKER_DRIVER: overlay
+    custom_tag: 'latest'
+  stage: deploy
+  dependencies:
+    - build
+  before_script:
+    - *login  # This is a reference to the anchor.
+  script:
+    - *build_push # This is a reference to the anchor.
+  when: on_success
+  only:
+    - master
+
+deploy-image-tag:
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay
+    custom_tag: '${CI_COMMIT_TAG}'
+  stage: deploy
+  dependencies:
+    - build
+  before_script:
+    - *login  # This is a reference to the anchor.
+  script:
+    - *build_push # This is a reference to the anchor.
+  when: on_success
+  only:
+    - tags
