@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'API',
-    script: 'index.js',
+    script: 'src/index.js',
     instances: 1,
     autorestart: true,
     watch: false,
@@ -16,11 +16,12 @@ module.exports = {
 
   deploy : {
     production : {
-      key : 'keys/gitlab-deploy.pub',
+      key  : 'keys/gitlab-deploy.pub',
       user : 'root',
       host : '66.97.36.28',
+      port: "5822",
       ref  : 'origin/master',
-      repo : 'git@gitlab.com:intelliDrone/api.git',
+      repo : 'https://gitlab+deploy-token-26641:Ud-zqMj-K6tcAoHusNeL@gitlab.com/intelliDrone/api.git',
       path : '/root/NodeApps/api',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
