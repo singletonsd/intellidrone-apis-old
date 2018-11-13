@@ -23,7 +23,7 @@ stages:
 build:
   stage: build
   script:
-    - npm install
+    #- npm install
     - *generate_env_file
 
 test:
