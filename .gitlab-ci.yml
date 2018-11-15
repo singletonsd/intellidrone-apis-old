@@ -125,9 +125,9 @@ deploy-image-tag:
   stage: deploy
   dependencies:
     - build
-    - apk add --update bash
   before_script:
     - *login  # This is a reference to the anchor.
+    - apk add --update bash
   script:
     *build_push # This is a reference to the anchor.
   when: on_success
