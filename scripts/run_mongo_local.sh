@@ -31,7 +31,6 @@ function usage(){
     echo "-h|--host: configurated host. "
     echo "-p|--password: password. "
     echo "-P|--port: port. Default 27017 "
-    exit 1
 }
 
 while [[ $# -gt 0 ]]
@@ -55,6 +54,7 @@ do
         ;;
         *)    # unknown option
             usage
+            exit 1;
         ;;
     esac
 done
@@ -67,16 +67,13 @@ if [ "$(docker ps -aq -f name="${CONTAINER_NAME}")" ]; then
         docker start "${CONTAINER_NAME}" > /dev/null 2>&1
     fi
 else
-    # docker run -e MONGO_INITDB_ROOT_USERNAME=${USER} -e MONGO_INITDB_ROOT_PASSWORD=${PASSWORD} \
-    #     -p ${PORT}:27017 -d \
-    #     --name ${CONTAINER_NAME} ${IMAGE_NAME}
     docker run -p ${PORT}:27017 -d \
         --name ${CONTAINER_NAME} ${IMAGE_NAME}
 fi
 
 CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${CONTAINER_NAME})
 echo "Waiting port to be open ${CONTAINER_IP}:3306..."
-while ! nc -z ${CONTAINER_IP} 3306; do
+while ! nc -z ${CONTAINER_IP} 27017; do
     sleep 0.5 # wait for 1/10 of the second before check again
 done
 echo "Container ready"
@@ -84,4 +81,4 @@ echo "Container ready"
 PORT=$(docker port ${CONTAINER_NAME} | sed 's/^.*://')
 PASSWORD=$(docker inspect -f "{{ .Config.Env }}" ${CONTAINER_NAME} | cut -d ' ' -f2 | cut -d '=' -f2)
 
-echo "Mysql Container running. Port:${PORT}, Name:${CONTAINER_NAME}, User:${USER}, Password:${PASSWORD}, IP:${CONTAINER_IP}"
+echo "Mongo Container running. Port:${PORT}, Name:${CONTAINER_NAME}, User:${USER}, Password:${PASSWORD}, IP:${CONTAINER_IP}"

@@ -2,9 +2,9 @@
   "name": "vacas",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/index.js -r dotenv/config",
     "fix-memory-limit": "increase-memory-limit"
   },
   "keywords": [],
@@ -12,12 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.4",
+    "dotenv": "^6.1.0",
     "express": "^4.16.3",
     "mongoose": "^5.2.3",
     "multer": "^1.3.1",
     "n-readlines": "^1.0.0",
     "node-grok": "2.0.3",
-    "ol": "^5.1.3"
+    "ol": "^5.1.3",
+    "shelljs": "^0.8.3"
   },
   "devDependencies": {
     "nodemon": "^1.18.2",

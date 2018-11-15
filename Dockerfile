@@ -9,21 +9,24 @@ LABEL mainteiner="Patricio Perpetua <patricio.perpetua.arg@gmail.com>" \
     distribution-scope="private" \
     Summary="Image to run intellidrone api."
 
+RUN apk add --no-cache \
+    python \
+    make gcc g++ 
+
+ENV PYTHON /usr/bin/python
+
 WORKDIR /usr/src/app
 
 COPY src src/
 COPY package.json .
-COPY pm2.js .
 
 # Install app dependencies
 ENV NPM_CONFIG_LOGLEVEL warn
 RUN npm install --production
-
-COPY . .
 
 EXPOSE 3000
 
 # Show current folder structure in logs
 RUN ls -al -R
 
-CMD [ "pm2-runtime", "start", "pm2.js" ]
+CMD [ "pm2-runtime", "start", "src/index.js" ]

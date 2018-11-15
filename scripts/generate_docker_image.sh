@@ -34,6 +34,7 @@ CI_COMMIT_SHA=
 if [ $# -ne 3 ]; then
   echo -e "Illegal number of parameters"
   echo -e "$(usage)"
+  exit 1;
 else
     NAME=${1}
     TAG=${2}
