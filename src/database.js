@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
-const uri = 'mongodb://localhost/vacas';
+require('dotenv').config();
+
+var uri = 'mongodb://'+process.env.DATABASE_URL+'/vacas';
+if(process.env.DATABASE_URL){
+  uri = 'mongodb://localhost/vacas';  
+}
+
 mongoose.connect(uri)
   .then(db => console.log('Base de datos corriendo'))
   .catch(err => console.error(err));

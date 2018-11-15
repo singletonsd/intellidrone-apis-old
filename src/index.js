@@ -3,7 +3,7 @@ const cors = require('cors');
 const {mongoose} = require('./database');
 const app = express();
 const multer = require('multer');
-require('dotenv').config()
+require('dotenv').config();
 
 app.set('port',process.env.PORT || 3000);
 

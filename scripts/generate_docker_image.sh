@@ -28,13 +28,19 @@ function usage(){
   echo -e "Third Argument: git commit sha"
 }
 
-TAG=
-NAME=
-CI_COMMIT_SHA=
+TAG=latest
+NAME=registry.gitlab.com/intellidrone/api
+CI_COMMIT_SHA=112233
 if [ $# -ne 3 ]; then
   echo -e "Illegal number of parameters"
   echo -e "$(usage)"
-  exit 1;
+  read -r -p "Do you want to run script with IMAGE_NAME=${NAME}:${TAG}? [y/N] " response
+  if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+  then
+      echo "Running with IMAGE_NAME=${NAME}:${TAG}"
+  else
+      exit 1;
+  fi
 else
     NAME=${1}
     TAG=${2}

@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 
 COPY src src/
 COPY package.json .
-
+COPY environment/.docker.env ./.env
 # Install app dependencies
 ENV NPM_CONFIG_LOGLEVEL warn
 RUN npm install --production
