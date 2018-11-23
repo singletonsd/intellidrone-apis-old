@@ -3,13 +3,14 @@ const adminCtrl = {};
 
 
 adminCtrl.addUser = async(req,res)=>{
-  const user = new adminModel({
-    _id:req.body.id,
-    usuario:req.body.usuario,
-    password:req.body.password
-  });
-  await user.save();
-  res.json("Usuario guardado");
+  // const user = new adminModel({
+  //   _id:req.body.id,
+  //   usuario:req.body.usuario,
+  //   password:req.body.password
+  // });
+  // await user.save();
+  // res.json("Usuario guardado");
+  res.json("Opción inavilitada.");
 };
 
 adminCtrl.getUser = async(req,res)=>{
