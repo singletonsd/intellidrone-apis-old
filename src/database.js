@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 var uri = 'mongodb://'+process.env.DATABASE_URL+'/vacas';
-if(process.env.DATABASE_URL){
+if(!process.env.DATABASE_URL){
   uri = 'mongodb://localhost/vacas';  
 }
 
