@@ -20,7 +20,7 @@ module.exports = {
       host : '66.97.36.28',
       port: "5822",
       ref  : 'origin/master',
-      repo : 'https://patricio.perpetua.arg@gmail.com:RKYaQ9Nk8Go19yo9ivdc@gitlab.com/intelliDrone/api.git',
+      repo : 'https://gitlab+deploy-token-26641:Ud-zqMj-K6tcAoHusNeL@gitlab.com/intelliDrone/api.git',
       path : '/root/NodeApps/api',
       ssh_options : ["StrictHostKeyChecking=no"],
       'post-deploy' : 'npm install && pm2 reload ecosystem.local.config.js --env production'
