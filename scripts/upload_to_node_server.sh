@@ -66,7 +66,7 @@ case "$TARGET_SERVER" in
     *)
         echo "Target server unknown (${TARGET_SERVER}). Valid options development or production"
         exit 1
-        ;; 
+        ;;
 esac
 
 cd ${__root}
@@ -76,7 +76,7 @@ if [ -f ${FILE_GENERATED}  ]; then
 fi
 
 # if [ ! -f ${FOLDER_KEYS}/${FILE_PRIVATE_KEY} ]; then
-#   echo "Cannot find private key inside folder keys. Name ${FILE_PRIVATE_KEY}" 
+#   echo "Cannot find private key inside folder keys. Name ${FILE_PRIVATE_KEY}"
 #   exit 1
 # fi
 
@@ -91,4 +91,4 @@ sed -e "s/\${GITLAB_USER}/${USER}/" -e "s/\${GITLAB_PASS}/${PASS}/" \
   -e "s/\${BRANCH}/${BRANCH}/" -e "s/\${TARGET_SERVER}/${TARGET_SERVER}/" \
   ${FILE_GENERATED}
 
-pm2 deploy ecosystem.local.config.js production
+pm2 deploy ecosystem.local.config.js production --force
