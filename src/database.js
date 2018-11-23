@@ -3,7 +3,7 @@ require('dotenv').config();
 
 var uri = 'mongodb://'+process.env.DATABASE_URL+'/vacas';
 if(!process.env.DATABASE_URL){
-  uri = 'mongodb://localhost/vacas';  
+  uri = 'mongodb://localhost/vacas';
 }
 
 mongoose.connect(uri)

@@ -23,7 +23,7 @@ module.exports = {
       repo : 'https://gitlab+deploy-token-26641:Ud-zqMj-K6tcAoHusNeL@gitlab.com/intelliDrone/api.git',
       path : '/root/NodeApps/api-production',
       ssh_options : ["StrictHostKeyChecking=no"],
-      'post-deploy' : 'npm install && pm2 reload ecosystem.local.config.js --env production'
+      'post-deploy' : 'npm install && pm2 reload ecosystem.local.config.js'
     }
   }
 };
