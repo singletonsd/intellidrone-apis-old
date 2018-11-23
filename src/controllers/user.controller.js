@@ -1,6 +1,6 @@
 const userModel = require('../models/user');
 const userCtrl = {};
-
+const _ = require('lodash');
 
 userCtrl.addUser = async(req,res)=>{
   const user = new userModel({
@@ -27,6 +27,14 @@ userCtrl.getUser = async(req,res)=>{
 
 }
 
+userCtrl.getUsers = async(req,res)=>{
+
+  const users = await userModel.find();
+  _.forEach(users || [], (field) => {
+    field.password = undefined;
+  });
+    res.json(users);
+}
 
 userCtrl.setCoordinates = async(req,res)=>{
   const user = await userModel.findByIdAndUpdate({_id:req.body.usuario}, {$set:{"latitud":req.body.latitud,"longitud":req.body.longitud}});

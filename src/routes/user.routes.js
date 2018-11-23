@@ -5,6 +5,7 @@ const usr = require('../controllers/user.controller');
 
 
 router.post('/',usr.addUser);
+router.get('/', usr.getUsers);
 router.post('/check',usr.getUser);
 router.post('/setCoordinates',usr.setCoordinates);
 
