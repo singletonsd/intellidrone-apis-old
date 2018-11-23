@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: 'API',
+    name: 'API-production',
     script: 'src/index.js',
     instances: 1,
     autorestart: true,
@@ -21,7 +21,7 @@ module.exports = {
       port: "5822",
       ref  : 'origin/master',
       repo : 'https://gitlab+deploy-token-26641:Ud-zqMj-K6tcAoHusNeL@gitlab.com/intelliDrone/api.git',
-      path : '/root/NodeApps/api',
+      path : '/root/NodeApps/api-production',
       ssh_options : ["StrictHostKeyChecking=no"],
       'post-deploy' : 'npm install && pm2 reload ecosystem.local.config.js --env production'
     }
