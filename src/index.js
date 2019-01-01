@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const {mongoose} = require('./database');
 const app = express();
 const multer = require('multer');

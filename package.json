@@ -8,8 +8,17 @@
     "fix-memory-limit": "increase-memory-limit"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "homepage": "https://gitlab.com/intelliDrone/api",
+  "license" : "SEE LICENSE IN LICENSE file",
+  "bugs":{
+    "url" : "https://gitlab.com/intelliDrone/api/issues",
+    "email" : "patricio.perpetua.arg@gmail.com"
+  },
+  "author": {
+    "name" : "Patricio Perpetua",
+    "email" : "patricio.perpetua.arg@gmail.com",
+    "url" : "http://patricioperpetua.singleton.com.ar"
+  },
   "dependencies": {
     "cors": "^2.8.4",
     "dotenv": "^6.1.0",

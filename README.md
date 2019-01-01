@@ -18,7 +18,7 @@
 
 ----------------------
 
-To upload code in production, you must have a gitlab user credentials and server public key in base64 format. Then, excutes the following code:
+To upload code in production, you must have a gitlab user credentials and server public key in base64 format. Then, executes the following code:
 
 ```bash
 ./upload_to_node_server.sh production USER PASSWORD
