@@ -60,7 +60,7 @@ deploy-server:
     # - '[[ -f /.dockerenv ]] && echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts'
     - npm i -g pm2
   script:
-    - ./scripts/upload_to_node_server.sh production ${GITLAB_REGISTRY_USER} ${GITLAB_REGISTRY_PASS}
+    - pm2 deploy ecosystem.config.js production --force
   when: on_success
   only:
     - master
