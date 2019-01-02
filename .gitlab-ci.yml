@@ -60,7 +60,7 @@ deploy-server:
     # - '[[ -f /.dockerenv ]] && echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts'
     - npm i -g pm2
   script:
-    - pm2 deploy ecosystem.config.js production --force
+    - pm2 deploy ecosystem.config.js production
   when: on_success
   only:
     - master
