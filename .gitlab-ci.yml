@@ -38,24 +38,14 @@ test:
 deploy-server:
   stage: deploy
   before_script:
-    # Install ssh-agent if not already installed, it is required by Docker.
-    # (change apt-get to yum if you use a CentOS-based image)
     - 'which ssh-agent || ( apk add --update openssh )'
-
-    # Add bash
     - apk add --update bash
-
-    # Add git
     - apk add --update git
-
-    # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-    #- echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-
     - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/robotagro
+    - chmod 700 ~/.ssh/robotagro
     - eval "$(ssh-agent -s)"
-    - ssh-add ~/.ssh/id_rsa
+    - ssh-add ~/.ssh/robotagro
     - ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
 
     # For Docker builds disable host key checking. Be aware that by adding that
@@ -63,15 +53,15 @@ deploy-server:
     # WARNING: Use this only with the Docker executor, if you use it with shell
     # you will overwrite your user's SSH config.
     #- mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     # In order to properly check the server's host key, assuming you created the
     # SSH_SERVER_HOSTKEYS variable previously, uncomment the following two lines
     # instead.
     # - mkdir -p ~/.ssh
     # - '[[ -f /.dockerenv ]] && echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts'
+    - npm i -g pm2
   script:
-  - npm i -g pm2
-  - pm2 deploy ecosystem.config.js production
+    - ./scripts upload_to_node_server production ${GITLAB_REGISTRY_USER} ${GITLAB_REGISTRY_PASS}
   when: on_success
   only:
     - master

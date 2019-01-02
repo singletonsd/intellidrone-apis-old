@@ -42,8 +42,7 @@ TARGET_SERVER=
 BRANCH=
 USER=
 PASS=
-FOLDER_KEYS=keys
-FILE_PRIVATE_KEY="server.key"
+KEY_SSH="~/.ssh/robotagro"
 FILE_ORIGINAL="ecosystem.config.js"
 FILE_GENERATED="ecosystem.local.config.js"
 if [ $# -ne 3 ]; then
@@ -69,26 +68,17 @@ case "$TARGET_SERVER" in
         ;;
 esac
 
-cd ${__root}
-
 if [ -f ${FILE_GENERATED}  ]; then
   rm ${FILE_GENERATED}
 fi
 
-# if [ ! -f ${FOLDER_KEYS}/${FILE_PRIVATE_KEY} ]; then
-#   echo "Cannot find private key inside folder keys. Name ${FILE_PRIVATE_KEY}"
-#   exit 1
-# fi
-
-# ssh-add ${FOLDER_KEYS}/${FILE_PRIVATE_KEY}
-
-# ssh-keyscan -H 'web.robotagro.com' >> ~/.ssh/known_hosts
-
-
 cp ${FILE_ORIGINAL} ${FILE_GENERATED}
 
-sed -e "s/\${GITLAB_USER}/${USER}/" -e "s/\${GITLAB_PASS}/${PASS}/" \
-  -e "s/\${BRANCH}/${BRANCH}/" -e "s/\${TARGET_SERVER}/${TARGET_SERVER}/" \
+sed -e "s/\${GITLAB_USER}/${USER}/" \
+    -e "s/\${GITLAB_PASS}/${PASS}/" \
+    -e "s/\${BRANCH}/${BRANCH}/" \
+    -e "s/\${TARGET_SERVER}/${TARGET_SERVER}/" \
+    -e "s/\${KEY_SSH}/${KEY_SSH}/" \
   ${FILE_GENERATED}
 
 pm2 deploy ecosystem.local.config.js production --force

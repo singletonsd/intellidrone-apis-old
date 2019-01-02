@@ -15,7 +15,7 @@ module.exports = {
   }],
   deploy : {
     production : {
-      key  : 'keys/server.pub',
+      key  : '${KEY_SSH}',
       user : 'root',
       host : '66.97.36.28',
       port: "5822",
