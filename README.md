@@ -1,5 +1,7 @@
 # INTELLIDRONE API
 
+> The **main repository** is hosted in [gitlab.com/intellidrone/api](https://gitlab.com/intellidrone/api) but it is automaticaly mirrored to [github.com](https://github.com/singletonsd/intellidrone-apis-old.git) and to [gitlab.com/intellidrone/apis/old](https://gitlab.com/singletonsd/intellidrone/apis/old). If you are in the Github page it may occur that is not updated to the last version.
+
 ## BRANCHING MODEL
 
 ----------------------
