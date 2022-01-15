@@ -29,7 +29,7 @@
     "n-readlines": "^1.0.0",
     "node-grok": "2.0.3",
     "ol": "^5.1.3",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "nodemon": "^1.18.2",
